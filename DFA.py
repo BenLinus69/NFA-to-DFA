@@ -11,19 +11,14 @@ class DFA[STATE]:
     F: set[STATE]
 
     def accept(self, word: str) -> bool:
-        # Start from the initial state
         current_state = self.q0
 
-        # Iterate through each character in the word
         for char in word:
-            # Check if there is a transition for the current state and character
             if (current_state, char) in self.d:
                 current_state = self.d[(current_state, char)]
             else:
-                # If there's no transition for the current state and character, reject the word
                 return False
 
-        # Check if the final state after processing the word is in the set of final states
         return current_state in self.F
 
     def remap_states[OTHER_STATE](self, f: Callable[[STATE], 'OTHER_STATE']) -> 'DFA[OTHER_STATE]':
